@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.vite/
+*.log
+.DS_Store
+
+# backend
+backend/__pycache__/
+backend/**/__pycache__/
+*.pyc
+backend/jaldarpaan.db
+backend/jaldarpaan.db-wal
+backend/jaldarpaan.db-shm
+.venv/
+venv/

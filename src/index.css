@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-ink-950: #04070d;
+  --color-ink-900: #060c16;
+  --color-ink-850: #0a1322;
+  --color-ink-800: #0e1a2e;
+  --color-ink-700: #16253e;
+  --color-ink-600: #223550;
+  --color-fog-100: #e8f0fa;
+  --color-fog-300: #b9c9dd;
+  --color-fog-400: #8ca3bf;
+  --color-fog-500: #64789a;
+  --color-aqua-300: #67e8f9;
+  --color-aqua-400: #22d3ee;
+  --color-aqua-500: #06b6d4;
+  --color-risk-green: #22c55e;
+  --color-risk-yellow: #facc15;
+  --color-risk-orange: #f97316;
+  --color-risk-red: #ef4444;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  @apply bg-ink-950 text-fog-100 font-sans antialiased;
+  background-image:
+    radial-gradient(1100px 500px at 85% -10%, rgba(34, 211, 238, 0.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(6, 182, 212, 0.05), transparent 60%);
+}
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #223550; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #2d4368; }
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold
+    transition-all duration-150 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-white/10 bg-ink-850/90 backdrop-blur-sm;
+  }
+  .panel-title {
+    @apply font-display text-[13px] font-semibold uppercase tracking-[0.14em] text-fog-300;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-wide;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold
+      transition-all duration-150 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply bg-aqua-500 text-ink-950 hover:bg-aqua-400 shadow-[0_0_24px_-6px_rgba(34,211,238,0.55)];
+  }
+  .btn-ghost {
+    @apply border border-white/12 bg-white/[0.04] text-fog-100 hover:bg-white/[0.09];
+  }
+  .btn-danger {
+    @apply bg-risk-red/90 text-white hover:bg-risk-red shadow-[0_0_24px_-6px_rgba(239,68,68,0.6)];
+  }
+  .btn-amber {
+    @apply bg-risk-orange/90 text-white hover:bg-risk-orange;
+  }
+  .metric-num {
+    @apply font-display font-semibold tabular-nums text-fog-100;
+  }
+  .metric-label {
+    @apply text-[10.5px] font-semibold uppercase tracking-[0.12em] text-fog-500;
+  }
+  .input {
+    @apply w-full rounded-xl border border-white/12 bg-ink-900/80 px-4 py-3 text-[15px] text-fog-100
+      placeholder:text-fog-500 outline-none focus:border-aqua-400/70 focus:ring-2 focus:ring-aqua-400/20 transition;
+  }
+  .table-head {
+    @apply text-left text-[10.5px] font-semibold uppercase tracking-[0.12em] text-fog-500 px-3 py-2.5;
+  }
+  .table-cell {
+    @apply px-3 py-3 text-[13.5px] text-fog-100 align-middle;
+  }
+}
+
+/* ---------- Map village markers ---------- */
+.vmarker { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.vmarker .dotwrap { position: relative; display: grid; place-items: center; }
+.vmarker .dot {
+  width: 14px; height: 14px; border-radius: 9999px; border: 2.5px solid rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.45), 0 2px 10px rgba(0,0,0,0.5);
+  transition: transform 0.15s ease;
+}
+.vmarker:hover .dot { transform: scale(1.25); }
+.vmarker .pulse {
+  position: absolute; width: 14px; height: 14px; border-radius: 9999px; opacity: 0;
+  animation: vmpulse 1.8s ease-out infinite;
+}
+.vmarker.is-red .pulse, .vmarker.is-orange .pulse { opacity: 1; }
+.vmarker.is-red .dot { background: #ef4444; }
+.vmarker.is-orange .dot { background: #f97316; }
+.vmarker.is-yellow .dot { background: #facc15; }
+.vmarker.is-green .dot { background: #22c55e; }
+.vmarker.is-red .pulse { background: rgba(239, 68, 68, 0.5); }
+.vmarker.is-orange .pulse { background: rgba(249, 115, 22, 0.45); }
+@keyframes vmpulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3.4); opacity: 0; }
+}
+.vmarker .label {
+  margin-top: 3px; display: flex; flex-direction: column; align-items: center; gap: 1px;
+  pointer-events: none; user-select: none;
+}
+.vmarker .name {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em; color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.95), 0 0 6px rgba(0,0,0,0.7);
+  white-space: nowrap;
+}
+.vmarker .metric {
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; color: #a5f3fc;
+  background: rgba(4, 7, 13, 0.72); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 6px; padding: 0 5px; line-height: 15px; white-space: nowrap;
+}
+.vmarker.is-selected .dot { outline: 2px solid rgba(103, 232, 249, 0.9); outline-offset: 3px; }
+.vmarker.is-selected .name { color: #67e8f9; }
+
+/* MapLibre tweaks */
+.maplibregl-ctrl-attrib { font-size: 10px !important; background: rgba(4,7,13,0.6) !important; }
+.maplibregl-ctrl-attrib a { color: #b9c9dd !important; }
+.maplibregl-ctrl-bottom-right { z-index: 5; }
+.maplibregl-canvas { outline: none; }
+
+/* ---------- Animations ---------- */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { display: inline-flex; animation: marquee 38s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.live-dot { animation: livePulse 1.6s ease-in-out infinite; }
+
+@keyframes rainFall {
+  from { transform: translateY(-15vh); opacity: 0; }
+  10% { opacity: 0.7; }
+  to { transform: translateY(115vh); opacity: 0; }
+}
+.rain-drop {
+  position: absolute; top: -10vh; width: 1.5px; border-radius: 2px;
+  background: linear-gradient(to bottom, transparent, #67e8f9);
+  animation: rainFall linear infinite;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-3px); }
+  40%, 60% { transform: translateX(3px); }
+}
+.animate-shake { animation: shake 0.45s ease-in-out; }
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px -6px rgba(34, 211, 238, 0.55); }
+  50% { box-shadow: 0 0 30px -4px rgba(34, 211, 238, 0.95); }
+}
+.animate-glow { animation: glowPulse 1.8s ease-in-out infinite; }
+
+.tabular { font-variant-numeric: tabular-nums; }

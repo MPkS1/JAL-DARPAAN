@@ -1,0 +1,295 @@
+═══════════════════════════════════════════════════════════════════════════
+  SMART INDIA HACKATHON 2026 — IDEA PPT TEXT (OFFICIAL 6-SLIDE TEMPLATE)
+  Copy each slide's content into the matching template slide, then export
+  the PPT as PDF and upload to the SIH portal (PDF only — no PPT/DOC).
+  Keep slides 1–6 exactly; delete the "Important Pointers" slide.
+═══════════════════════════════════════════════════════════════════════════
+
+
+───────────────────────────────────────────────────────────────────────────
+SLIDE 1 — TITLE PAGE
+───────────────────────────────────────────────────────────────────────────
+
+  Problem Statement ID    : SIH 2026 · 26192
+  Problem Statement Title : Flash Flood Prediction System for Hilly
+                            Regions using Multi-Source Data
+  Theme                   : Disaster Management
+  PS Category             : Software
+  Team ID                 : 184091
+  Team Name (Registered)  : BhushaktiAI
+
+  IDEA TITLE (put prominently on the slide):
+      JAL-DARPAAN — AI Guardian Against Hill Flash Floods
+
+  Optional subtitle: "Village-level flash flood early warning for the
+  Indian Himalaya — built on India's existing stations, free satellite
+  data and open-source AI. Running cost: ₹0/month."
+
+  Footer strip (optional): [Your college/logo]  ·  SIH 2026  ·  Team BhushaktiAI
+
+───────────────────────────────────────────────────────────────────────────
+SLIDE 2 — PROPOSED SOLUTION (Idea/Solution/Prototype)
+───────────────────────────────────────────────────────────────────────────
+
+THE PROBLEM (3 bullets, say it fast)
+• Hill flash floods (Kedarnath 2013, Chamoli 2021, Sikkim GLOF 2023,
+  Dharali 2025) strike with minutes of warning — or none.
+• Existing systems warn whole districts (~11 km grids, rainfall only);
+  no operational village-level flash-flood warning exists in India.
+• Government already operates 1,000+ IMD AWS, ~1,400 ARG, ~338 CWC
+  forecast sites — but the data sits siloed across portals.
+
+PROPOSED SOLUTION — JAL-DARPAAN (5 bullets)
+• One software platform that fuses 11 free data sources — IMD stations,
+  CWC/India-WRIS river telemetry, GPM IMERG satellite rain, NASA SMAP
+  soil moisture, Copernicus 30 m DEM, GSI landslide records, Sentinel-1,
+  Open-Meteo and low-cost ESP32 IoT nodes.
+• AI predicts the next 1–6 hours (LSTM/GRU nowcast + LightGBM risk) and
+  colours every village green/yellow/orange/red on a live 2D + 3D map.
+• Actionable alerts: village name + flood-arrival countdown + nearest
+  shelter + evacuation route + helpline — in Hindi & local languages.
+• Explainable AI: every alert shows WHY it fired (SHAP-style):
+  "Soil 92% saturated + 45 mm/h rain → HIGH risk" — officials trust it.
+• False-alarm defence: CRITICAL/WARNING fire only when ≥2 independent
+  sources agree, with per-village cooldowns.
+
+WORKING PROTOTYPE (already built — say this!)
+• Full working web app (React + TypeScript + MapLibre): 24 pilot villages
+  of Rudraprayag district (Mandakini valley), 2D satellite map ⇄ 3D
+  terrain flyover, live alert feed, sensor health page, MQTT inspector
+  showing the exact ESP32 payload, AI analytics page, 5-role RBAC login
+  (National → State → District → Field → Village Pradhan).
+• Live scenario drill: "Cloudburst (Kedarnath-style)" — watch villages
+  turn orange→red as alerts fire with WHY explanations.
+
+HOW IT ADDRESSES THE PROBLEM (4 bullets)
+• District-scale warnings  → 30 m micro-watersheds give village-level risk
+• Vague 12–24 h forecast   → 1–3 h hyper-local lead time + arrival countdown
+• Rainfall-only inputs     → 6-source fusion + 2-source rule cuts false alarms
+• Siloed station data      → one fused platform with automatic fallbacks —
+                             no single portal outage breaks it
+
+INNOVATION & UNIQUENESS (5 bullets)
+• First village-level flash-flood early-warning platform for Indian hill
+  micro-watersheds — existing global tools (GloFAS ≈ 11 km grid, Google
+  Flood Hub, FFGS) stop at district / major-river level.
+• Sensor strategy — augment, don't duplicate: audit & integrate India's
+  existing stations; ₹1,500 ESP32 nodes only at verified coverage gaps.
+• Novel ensemble for ungauged streams: LSTM + GRU + LightGBM with free
+  satellite proxies where no river gauge exists.
+• Trust through explainability — SHAP-powered "why this alert" in plain
+  language + counterfactual ("what would downgrade this alert?").
+• Zero-cost replicability — ₹0/month infrastructure means any hill state,
+  district or NGO can adopt without procurement friction.
+
+───────────────────────────────────────────────────────────────────────────
+SLIDE 3 — TECHNICAL APPROACH
+───────────────────────────────────────────────────────────────────────────
+
+TECHNOLOGIES (all free / open-source)
+• Frontend : React 18 + TypeScript + Vite · Tailwind CSS v4 · MapLibre GL
+             (2D Esri imagery + 3D terrain, no API keys) · Recharts
+• Backend  : Python 3.12 + FastAPI — ✅ implemented in repo (backend/: JWT + RBAC,
+             risk/simulation engines, alert lifecycle, ESP32 ingest, WebSocket)
+             · SQLAlchemy ORM (SQLite dev → Postgres/Neon by config) · PostGIS +
+             Redis in Phase 2
+• AI/ML    : PyTorch (LSTM/GRU + ConvLSTM) · LightGBM · SHAP ·
+             TimesFM/Chronos zero-shot nowcasting for ungauged villages
+• IoT      : ESP32 + tipping-bucket rain gauge + soil probe + MQTT
+             (Mosquitto) — ₹1,500–2,800 per node, gap villages only
+• Data     : IMD AWS/ARG · CWC AFF · India-WRIS · GPM IMERG · NASA SMAP ·
+             Sentinel-1 · Copernicus DEM · GSI Bhukosh · Open-Meteo (free,
+             keyless GloFAS river-discharge API)
+• DevOps   : Docker · GitHub Actions CI · Cloudflare Pages (frontend) +
+             Render free tier (backend) + Neon Postgres — ₹0/month hosting
+
+METHODOLOGY — SYSTEM FLOW (draw as flow diagram on the slide)
+
+  DATA SOURCES ──► INGESTION WORKERS ──► PostgreSQL + Redis
+  (IMD·CWC·WRIS·IMERG·SMAP·Sentinel·ESP32)        │
+                                                  ▼
+                                        AI ENGINE (LSTM → GRU →
+                                        LightGBM → fusion → SHAP)
+                                                  │
+                                                  ▼
+                                   ALERT DISPATCHER (CAP/SACHET,
+                                   SMS · Telegram · push)
+                                                  │
+                                                  ▼
+                                   REACT DASHBOARD (2D/3D map,
+                                   WHY boxes, arrival countdown)
+                                                  │
+                                   ┌──────────────┴──────────────┐
+                                   ▼                             ▼
+                             Village Pradhan              District EO / NDRF
+                             (own village view)           (command center)
+
+RISK ENGINE (the transparent core)
+  score = 100 × (0.34·rain₁ₕ + 0.27·soil + 0.17·river + 0.16·slope + 0.06·history)
+  Bands: SAFE <40 · WATCH 40–59 · WARNING 60–74 · CRITICAL ≥75
+  Warning/Critical require ≥2 independent sources; arrival time estimated
+  from rain intensity, soil saturation and river level vs danger mark.
+
+METHODOLOGY — IMPLEMENTATION STEPS (5 phases, mirrors SIH)
+  1. Research & foundation — audit existing stations; 24-village dataset
+     with elevation/slope/river/history; role matrix; CI pipeline.  [DONE]
+  2. Data core — ingestion adapters + exact ESP32 MQTT payload contract;
+     high-fidelity sensor simulator (real nodes plug in with zero change).
+  3. AI & alerts — LightGBM risk (AUC > 0.80 target), LSTM/GRU nowcast,
+     alert lifecycle (ACTIVE→ACK→RESOLVED), Telegram/SMS dispatch.
+  4. Test & harden — backtest vs Kedarnath 2013 / Chamoli 2021 / Sikkim
+     2023; load & security drills.
+  5. Pilot & scale — one district disaster authority; ESP32 gap nodes;
+     monthly retraining; expand state-wide.
+
+FUTURE SCOPE (one line at the bottom of the slide)
+  InSAR mountain-movement watch · dam & reservoir ledger · satellite river
+  & GLOF watch · zero-shot AI nowcasting · CAP/SACHET cell-broadcast.
+
+───────────────────────────────────────────────────────────────────────────
+SLIDE 4 — FEASIBILITY AND VIABILITY
+───────────────────────────────────────────────────────────────────────────
+
+FEASIBILITY ANALYSIS (5 dimensions — all High)
+• Technical   : every tool is proven open-source; identical models
+                published in 2024–25 peer-reviewed papers (ConvLSTM ~18%
+                better than LSTM; multi-source fusion cuts false alarms
+                30%+; LightGBM best speed-accuracy for flood risk).
+• Data        : HIS audit confirms existing stations (IMD 1,000+ AWS +
+                ~1,400 ARG; CWC ~338 forecast sites; open WRIS telemetry)
+                + fully open satellite feeds; every source has a
+                documented fallback.
+• Financial   : ₹0/month to run (free tiers + open-source stack); ESP32
+                nodes ₹1,500–2,800 one-time only where gaps exist vs
+                ₹50,000+ commercial stations.
+• Operational : Docker-based, stateless — runs on any host; one district
+                pilot proves it, then every new state = load new maps +
+                repeat the same station-audit process.
+• User need   : NDRF/MHA-sponsored problem; hill states face recurrent
+                events (2013, 2021, 2023, 2025); no village-level system
+                exists today.
+
+POTENTIAL CHALLENGES & RISKS (5, with mitigations)
+  Risk                                            Likelihood/Impact
+  1. False alarms erode trust ("alarm fatigue")      High / High
+     → ≥2-source confirmation rule + calibrated probabilities +
+       SHAP transparency + per-village alert cooldowns
+  2. Rare flood events → scarce training labels      High / High
+     → class weights + SMOTE; NASA global landslide catalog enriches
+       labels; anomaly-detection fallback model
+  3. IoT nodes fail in monsoon field conditions      High / Medium
+     → sealed solar enclosures; node health monitoring with offline
+       alerts; platform continues on station + satellite data
+  4. Ground-station data access varies (IMD portal
+     restrictions, Oct 2025)                         Medium / Medium
+     → swappable adapters — open India-WRIS + satellite rainfall +
+       Open-Meteo fully cover operations; IMD data via request/MoU
+  5. Free hosting limits as usage grows              Medium / Medium
+     → stateless containers migrate in one command; documented low-cost
+       VPS upgrade path (still < cost of one flood-damage assessment)
+
+STRATEGY SUMMARY (one line)
+  "Contract-first engineering": the demo's data layer is shaped exactly
+  like the production API — every subsystem swaps from simulated to real
+  with zero UI rewrites, which is why this is feasible in stages.
+
+───────────────────────────────────────────────────────────────────────────
+SLIDE 5 — IMPACT AND BENEFITS
+───────────────────────────────────────────────────────────────────────────
+
+TARGET AUDIENCE / REACH
+• Primary users : village heads & ward officers · district disaster
+                  managers (DDMA/SDMA) · NDRF/SDRF teams · ~10,000+
+                  residents of pilot villages
+• Scale of reach: 11 Himalayan hill states + Western Ghats districts —
+                  millions in flash-flood-prone valleys; India has ~40
+                  million hectares of flood-prone land (NDMA)
+
+SOCIAL BENEFITS (4 bullets)
+• Villagers get 1–3 hours to move family, livestock & documents —
+  instead of minutes or no warning
+• Local-language, actionable alerts (shelter + route + helpline) reach
+  non-technical users; village pradhans see their own village status
+• Explainable alerts end alarm fatigue — officials trust and act
+• Restored trust: every alert is logged & auditable → institutional
+  learning after every event
+
+ECONOMIC BENEFITS (3 bullets)
+• ₹0 software licensing — public money stays public; replicable by any
+  state without procurement friction
+• Avoided flood losses — India loses thousands of ₹ crore annually;
+  Kedarnath 2013 alone cost ~₹10,000+ crore (estimates vary)
+• Reuses India's existing station network instead of duplicating it —
+  ₹1,500 ESP32 nodes only at verified gaps vs ₹50,000+ per commercial
+  station
+
+ENVIRONMENTAL BENEFITS (3 bullets)
+• Early landslide detection protects fragile mountain watersheds
+• Solar-powered, low-energy ESP32 nodes with minimal footprint
+• Open data supports long-term climate-adaptation research
+
+ALIGNMENT WITH NATIONAL GOALS (4 bullets)
+• NDMA's National Disaster Management Plan & Sendai Framework (sponsored
+  by MHA/NDRF, DM Division)
+• Digital India & Viksit Bharat 2047 — built on India's open-data
+  ecosystem (IMD, ISRO/NRSC-WRIS, CWC, GSI)
+• SDG 11.5 (deaths & economic losses from disasters)
+• SDG 13.1 (climate resilience & early-warning coverage)
+
+───────────────────────────────────────────────────────────────────────────
+SLIDE 6 — RESEARCH AND REFERENCES
+───────────────────────────────────────────────────────────────────────────
+
+KEY RESEARCH INSIGHTS (5 bullets)
+• India's HIS sensing layer already exists: IMD 1,000+ AWS, ~1,400 ARG;
+  CWC forecasts at ~338 stations; hourly telemetry open on India-WRIS —
+  the gap is integration & village-level intelligence, not hardware.
+• Deep ConvLSTM improved flash-flood prediction ~18% over LSTM —
+  Frontiers in Water (2024).
+• Multi-source fusion (rain+soil+slope) cuts false alarms 30%+ —
+  flood-forecasting literature.
+• LightGBM offers the best speed+accuracy balance for flood-risk
+  classification — Scientific Reports (2025).
+• Uttarakhand DL+SHAP study: slope, rainfall, soil type & distance-to-
+  stream are the top predictors — Earth Science Informatics (2025).
+
+REFERENCES / LINKS (13, verified)
+ 1. Deep Convolutional LSTM for Flash Flood Prediction — Frontiers in
+    Water 2024 — doi.org/10.3389/frwa.2024.1346104
+ 2. Flood Forecasting in Hilly Watersheds — Atmosphere (MDPI) 2024 —
+    doi.org/10.3390/atmos15070820
+ 3. Flash Flood Susceptibility, Uttarakhand Himalayas (DL+SHAP) — Earth
+    Science Informatics 2025 — doi.org/10.1007/s12145-024-01564-4
+ 4. Evaluating ML Efficiency for Flash Flood Mapping — Scientific
+    Reports 2025 — doi.org/10.1038/s41598-025-34037-9
+ 5. IMD AWS/ARG network (1,000+ AWS, ~1,400 ARG) — aws.imd.gov.in
+ 6. CWC Flood Forecasting network & SOP (~338 stations) — cwc.gov.in
+ 7. India-WRIS / NWIC open hourly river telemetry —
+    nwdp.nwic.gov.in · indiawris.gov.in
+ 8. CWC AFF live flood-condition portal — aff.india-water.gov.in
+ 9. NASA GPM IMERG rainfall data — gpm.nasa.gov
+10. NASA SMAP L4 soil moisture — smap.jpl.nasa.gov
+11. GSI Bhukosh landslide inventory — bhukosh.gsi.gov.in
+12. GloFAS benchmark system — global-flood.emergency.copernicus.eu
+13. NDMA flood statistics & guidelines — ndma.gov.in
+
+PROTOTYPE REPO & DOCS (show judges the engineering depth)
+  • Working prototype: React/TypeScript ops dashboard (24 villages,
+    2D+3D map, alerts, RBAC) — live build passing `tsc + vite`
+  • docs/DESIGN.md — full SDD: HLD · UML · LLD · data dictionary
+  • docs/PLAN.md — build plan, permission matrix, API contract
+  • docs/FUTURE_PLANS.md — sensing roadmap (InSAR · dams · GLOF · ledger)
+  • docs/AI_FUTURE_PLANS.md — AI roadmap vs Google Flood Hub & GloFAS
+  • docs/DEPLOYMENT.md — ₹0/month hosting (Cloudflare Pages · Render)
+
+═══════════════════════════════════════════════════════════════════════════
+  PRESENTATION NOTES (not part of the 6 slides)
+═══════════════════════════════════════════════════════════════════════════
+• Slide limit is 6 INCLUDING title — the pointer slide is deleted on upload.
+• Use points/diagrams/infographics — no paragraphs. The blocks above are
+  already sized to fit as bullets; trim to 3–4 lines per box if crowded.
+• Export as PDF before uploading to the SIH portal (only PDF accepted).
+• Suggested visuals: (S2) 2D/3D map screenshot + alert card with WHY box;
+  (S3) the flow diagram + risk-formula box; (S4) risk/mitigation table;
+  (S5) impact icons row; (S6) keep links small & monospace.
+• Team name on every slide footer: BhushaktiAI (as registered on portal).

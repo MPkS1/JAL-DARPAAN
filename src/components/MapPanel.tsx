@@ -79,8 +79,8 @@ export default function MapPanel({ live, selectedId, onSelect }: Props) {
         source: 'terrain-dem',
         paint: {
           'hillshade-exaggeration': 0.25,
-          'hillshade-shadow-color': '#081120',
-          'hillshade-highlight-color': '#e8f0fa',
+          'hillshade-shadow-color': '#cbd5e1',
+          'hillshade-highlight-color': '#f8fafc',
         },
       });
       setLoaded(true);
@@ -160,13 +160,13 @@ export default function MapPanel({ live, selectedId, onSelect }: Props) {
     if (mode === '3d') {
       map.setTerrain({ source: 'terrain-dem', exaggeration: 1.35 });
       map.setSky({
-        'sky-color': '#0e1a2e',
-        'horizon-color': '#2b4a6f',
-        'fog-color': '#0b1626',
-        'sky-horizon-blend': 0.6,
-        'horizon-fog-blend': 0.7,
-        'fog-ground-blend': 0.6,
-        'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0, 10, 0.6, 12, 1],
+        'sky-color': '#e0f2fe',
+        'horizon-color': '#7dd3fc',
+        'fog-color': '#f0f9ff',
+        'sky-horizon-blend': 0.5,
+        'horizon-fog-blend': 0.6,
+        'fog-ground-blend': 0.5,
+        'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0, 10, 0.5, 12, 1],
       });
       map.easeTo({ pitch: 62, zoom: 10.35, duration: 1400 });
     } else {
@@ -177,22 +177,22 @@ export default function MapPanel({ live, selectedId, onSelect }: Props) {
   }, [mode, loaded]);
 
   return (
-    <div className="panel relative overflow-hidden">
+    <div className="panel relative overflow-hidden ring-1 ring-surface-200">
       {/* header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/8 px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-surface-300 px-4 py-3">
         <div className="flex items-center gap-2">
-          <MapPin size={15} className="text-aqua-300" />
+          <MapPin size={15} className="text-aqua-600" />
           <h3 className="panel-title">Live risk map · Rudraprayag, Mandakini valley</h3>
         </div>
         <div className="flex items-center gap-2">
-          <span className="hidden items-center gap-1.5 font-mono text-[10.5px] text-emerald-300 sm:flex">
+          <span className="hidden items-center gap-1.5 font-mono text-[10.5px] text-emerald-600 sm:flex">
             <Satellite size={11} className="live-dot" /> Esri imagery + CDEM 30 m
           </span>
-          <div className="flex overflow-hidden rounded-lg border border-white/12">
+          <div className="flex overflow-hidden rounded-lg border border-surface-300">
             <button
               onClick={() => setMode('2d')}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] font-semibold transition ${
-                mode === '2d' ? 'bg-aqua-500 text-ink-950' : 'bg-white/[0.04] text-fog-300 hover:bg-white/[0.09]'
+                mode === '2d' ? 'bg-aqua-500 text-white' : 'bg-surface-100 text-text-700 hover:bg-surface-200'
               }`}
             >
               <Layers size={12} /> 2D
@@ -200,7 +200,7 @@ export default function MapPanel({ live, selectedId, onSelect }: Props) {
             <button
               onClick={() => setMode('3d')}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] font-semibold transition ${
-                mode === '3d' ? 'bg-aqua-500 text-ink-950' : 'bg-white/[0.04] text-fog-300 hover:bg-white/[0.09]'
+                mode === '3d' ? 'bg-aqua-500 text-white' : 'bg-surface-100 text-text-700 hover:bg-surface-200'
               }`}
             >
               <Mountain size={12} /> 3D terrain
@@ -213,14 +213,13 @@ export default function MapPanel({ live, selectedId, onSelect }: Props) {
       <div ref={containerRef} className="relative h-[520px] w-full md:h-[560px]" />
 
       {/* legend */}
-      <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-xl border border-white/12 bg-ink-950/85 px-3 py-2 backdrop-blur-sm">
+      <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-xl border border-surface-300 bg-white/90 px-3 py-2 backdrop-blur-sm">
         {(['SAFE', 'WATCH', 'WARNING', 'CRITICAL'] as const).map((b) => (
-          <span key={b} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-fog-300">
+          <span key={b} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-text-800">
             <span className="h-2.5 w-2.5 rounded-full border border-white/60" style={{ background: BANDS[b].hex }} />
             {b}
           </span>
-        ))}
-        <span className="hidden items-center gap-1.5 text-[10px] text-fog-400 md:flex">
+        ))}          <span className="hidden items-center gap-1.5 text-[10px] text-text-800 md:flex">
           <span className="live-dot text-red-400">●</span> pulse = WARNING+ · click a village to drill down
         </span>
       </div>

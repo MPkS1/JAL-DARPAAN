@@ -28,8 +28,8 @@ export default function Alerts() {
           <Siren size={16} className="text-red-300" />
           <h2 className="font-display text-[16px] font-bold">Alert log · full lifecycle</h2>
         </div>
-        <p className="text-[11.5px] text-fog-400">
-          WATCH fires at score ≥ 45 · WARNING ≥ 62 and CRITICAL ≥ 78 require <span className="text-fog-100">≥ 2 independent sources</span> · 90 s per-village cooldown
+        <p className="text-[11.5px] text-text-800">
+          WATCH fires at score ≥ 45 · WARNING ≥ 62 and CRITICAL ≥ 78 require <span className="text-text-900">≥ 2 independent sources</span> · 90 s per-village cooldown
         </p>
       </div>
 
@@ -47,17 +47,17 @@ export default function Alerts() {
         ))}
       </div>
 
-      <div className="panel flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 py-3 text-[11.5px] text-fog-300">
+      <div className="panel flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 py-3 text-[11.5px] text-text-800">
         <span className="metric-label">Your role's permissions:</span>
         {can('alert-ack')
-          ? <span className="flex items-center gap-1.5 text-emerald-300"><CheckCheck size={13} /> you can acknowledge</span>
-          : <span className="flex items-center gap-1.5 text-fog-500"><Lock size={12} /> acknowledge not allowed (view only)</span>}
+          ? <span className="flex items-center gap-1.5 text-emerald-600"><CheckCheck size={13} /> you can acknowledge</span>
+          : <span className="flex items-center gap-1.5 text-text-800"><Lock size={12} className="text-amber-500" /> acknowledge not allowed (view only)</span>}
         {can('alert-issue')
-          ? <span className="flex items-center gap-1.5 text-red-300"><BellRing size={13} /> you can issue evacuation advisories (from village pages)</span>
-          : <span className="flex items-center gap-1.5 text-fog-500"><Lock size={12} /> issuing advisories not allowed</span>}
+          ? <span className="flex items-center gap-1.5 text-red-600"><BellRing size={13} /> you can issue evacuation advisories (from village pages)</span>
+          : <span className="flex items-center gap-1.5 text-text-800"><Lock size={12} className="text-amber-500" /> issuing advisories not allowed</span>}
         {can('alert-resolve')
-          ? <span className="flex items-center gap-1.5 text-sky-300"><XCircle size={13} /> you can resolve / close</span>
-          : <span className="flex items-center gap-1.5 text-fog-500"><Lock size={12} /> resolving not allowed (National/State only)</span>}
+          ? <span className="flex items-center gap-1.5 text-sky-600"><XCircle size={13} /> you can resolve / close</span>
+          : <span className="flex items-center gap-1.5 text-text-800"><Lock size={12} className="text-amber-500" /> resolving not allowed (National/State only)</span>}
       </div>
 
       <AlertFeed />

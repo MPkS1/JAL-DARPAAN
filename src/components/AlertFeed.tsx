@@ -14,7 +14,7 @@ const SEV: Record<FloodAlert['severity'], { chip: string; label: string }> = {
 const STATUS: Record<FloodAlert['status'], { chip: string; label: string }> = {
   ACTIVE: { chip: 'border-red-400/40 bg-red-500/10 text-red-300', label: 'ACTIVE' },
   ACKNOWLEDGED: { chip: 'border-amber-400/40 bg-amber-500/10 text-amber-300', label: 'ACKNOWLEDGED' },
-  RESOLVED: { chip: 'border-white/15 bg-white/5 text-fog-400', label: 'RESOLVED' },
+  RESOLVED: { chip: 'border-surface-300 bg-surface-100 text-text-800', label: 'RESOLVED' },
 };
 
 interface Props {
@@ -29,17 +29,15 @@ export default function AlertFeed({ limit, title = 'Live alert feed', scroll = t
   const shown = limit ? alerts.slice(0, limit) : alerts;
 
   return (
-    <div className="panel flex flex-col">
-      <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+    <div className="panel flex flex-col">          <div className="flex items-center justify-between border-b border-surface-300 px-4 py-3">
         <div className="flex items-center gap-2">
-          <BellRing size={15} className="text-red-300" />
+          <BellRing size={15} className="text-red-600" />
           <h3 className="panel-title">{title}</h3>
         </div>
-        <span className="font-mono text-[10.5px] text-fog-500">{alerts.filter((a) => a.status === 'ACTIVE').length} active</span>
+        <span className="font-mono text-[10.5px] text-text-800">{alerts.filter((a) => a.status === 'ACTIVE').length} active</span>
       </div>
       <div className={`${scroll ? 'max-h-[520px] overflow-y-auto' : ''} divide-y divide-white/6`}>
-        {shown.length === 0 && (
-          <div className="p-6 text-center text-[12.5px] text-fog-400">No alerts — all villages below WATCH threshold. 🌤</div>
+        {shown.length === 0 && (                <div className="p-6 text-center text-[12.5px] text-text-800">No alerts — all villages below WATCH threshold. 🌤</div>
         )}
         {shown.map((a) => (
           <div key={a.id} className="p-4">
@@ -47,17 +45,17 @@ export default function AlertFeed({ limit, title = 'Live alert feed', scroll = t
               <span className={`chip ${SEV[a.severity].chip}`}>{SEV[a.severity].label}</span>
               <span className={`chip ${STATUS[a.status].chip}`}>{STATUS[a.status].label}</span>
               {a.sources.length >= 2 && (
-                <span className="chip border-emerald-400/40 bg-emerald-500/10 text-emerald-300">
+                <span className="chip border-emerald-400/50 bg-emerald-50 text-emerald-700 border-text-300 bg-surface-100 text-text-800">
                   <ShieldCheck size={11} /> {a.sources.length} sources confirm
                 </span>
               )}
-              {a.manual && <span className="chip border-violet-400/40 bg-violet-500/10 text-violet-300">MANUAL ORDER</span>}
-              <span className="ml-auto flex items-center gap-1 text-[10.5px] text-fog-500">
+              {a.manual && <span className="chip border-violet-400/50 bg-violet-50 text-violet-700 border-text-300 bg-surface-100 text-text-800">MANUAL ORDER</span>}
+              <span className="ml-auto flex items-center gap-1 text-[10.5px] text-text-800">
                 <Clock size={11} /> {timeAgo(a.ts)}
               </span>
             </div>
             <div className="flex items-baseline justify-between gap-2">
-              <Link to={`/villages/${a.villageId}`} className="font-display text-[14.5px] font-semibold text-fog-100 hover:text-aqua-300">
+              <Link to={`/villages/${a.villageId}`} className="font-display text-[14.5px] font-semibold text-text-900 hover:text-aqua-600">
                 {a.villageName}
               </Link>
               {a.arrivalMin !== null && a.status !== 'RESOLVED' && (
@@ -66,12 +64,12 @@ export default function AlertFeed({ limit, title = 'Live alert feed', scroll = t
                 </span>
               )}
             </div>
-            <p className="mt-1.5 text-[12.5px] leading-relaxed text-fog-300">{a.why}</p>
+            <p className="mt-1.5 text-[12.5px] leading-relaxed text-text-800">{a.why}</p>
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
               {a.sources.map((s) => (
-                <span key={s} className="chip border-aqua-400/25 bg-aqua-500/10 font-mono text-[10px] text-aqua-300">{s}</span>
+                <span key={s} className="chip border-aqua-400/50 bg-aqua-50 font-mono text-[10px] text-aqua-700 border-text-300 bg-surface-100 text-text-800">{s}</span>
               ))}
-              {a.ackBy && <span className="text-[10.5px] text-fog-500">ack by {a.ackBy}</span>}
+              {a.ackBy && <span className="text-[10.5px] text-text-800">ack by {a.ackBy}</span>}
               <span className="ml-auto flex gap-2">
                 {a.status === 'ACTIVE' && can('alert-ack') && (
                   <button
@@ -83,7 +81,7 @@ export default function AlertFeed({ limit, title = 'Live alert feed', scroll = t
                 )}
                 {a.status !== 'RESOLVED' && can('alert-resolve') && (
                   <button
-                    className="btn-ghost !px-3 !py-1.5 !text-[11.5px] hover:!border-emerald-400/40 hover:!text-emerald-300"
+                    className="btn-ghost !px-3 !py-1.5 !text-[11.5px] hover:!border-emerald-500 hover:!text-emerald-600"
                     onClick={() => resolveAlert(a.id)}
                   >
                     <XCircle size={13} /> Resolve

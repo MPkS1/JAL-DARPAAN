@@ -20,17 +20,17 @@ function Ticker() {
       const meta = l ? BANDS[l.band] : null;
       return (
         <span key={`${v.id}-${suffix}`} className="flex items-center gap-1.5 whitespace-nowrap px-3 font-mono text-[11px]">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: meta?.hex ?? '#64789a' }} />
-          <span className="text-fog-300">{v.name}</span>
-          <span style={{ color: meta?.hex ?? '#64789a' }}>{l ? `${l.score.toFixed(0)} ${l.band}` : '—'}</span>
-          <span className="text-aqua-300/80">{l ? `${l.rainMmHr.toFixed(1)} mm/h` : ''}</span>
-          <span className="px-2 text-fog-500">|</span>
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: meta?.hex ?? '#94a3b8' }} />
+          <span className="text-text-600">{v.name}</span>
+          <span style={{ color: meta?.hex ?? '#94a3b8' }}>{l ? `${l.score.toFixed(0)} ${l.band}` : '—'}</span>
+          <span className="text-aqua-600">{l ? `${l.rainMmHr.toFixed(1)} mm/h` : ''}</span>
+          <span className="px-2 text-text-400">|</span>
         </span>
       );
     });
 
   return (
-    <div className="panel overflow-hidden py-2" title="Live village risk ticker">
+    <div className="panel overflow-hidden py-2 ring-1 ring-surface-200" title="Live village risk ticker">
       <div className="marquee-track">
         {make('a')}
         {make('b')}
@@ -80,11 +80,11 @@ export default function Dashboard() {
         <div className="xl:col-span-2">
           {locked ? (
             <div className="panel flex h-full min-h-[300px] flex-col items-center justify-center gap-3 p-8 text-center">
-              <Lock size={28} className="text-amber-300" />
+              <Lock size={28} className="text-amber-600" />
               <h3 className="panel-title">Outside your panchayat scope</h3>
-              <p className="max-w-sm text-[12.5px] leading-relaxed text-fog-300">
-                As <span className="font-semibold text-fog-100">Village Pradhan</span> you have drill-down access to your own
-                village{ownVillage ? <span className="text-aqua-300"> “{ownVillage.name}”</span> : null} only. District and state
+              <p className="max-w-sm text-[12.5px] leading-relaxed text-text-500">
+                As <span className="font-semibold text-text-900">Village Pradhan</span> you have drill-down access to your own
+                village{ownVillage ? <span className="text-aqua-600"> “{ownVillage.name}”</span> : null} only. District and state
                 officers see every village — ask your DDMA officer for escalation.
               </p>
               {ownVillage && (
@@ -97,10 +97,10 @@ export default function Dashboard() {
             <VillagePanel village={selected} onClose={() => setSelectedId(null)} />
           ) : (
             <div className="panel flex h-full min-h-[300px] flex-col items-center justify-center gap-3 p-8 text-center">
-              <MousePointerClick size={28} className="text-aqua-300" />
+              <MousePointerClick size={28} className="text-aqua-600" />
               <h3 className="panel-title">Village drill-down</h3>
-              <p className="max-w-sm text-[12.5px] leading-relaxed text-fog-300">
-                Click any village marker on the 2D map — or switch to <span className="font-semibold text-fog-100">3D terrain</span> for
+              <p className="max-w-sm text-[12.5px] leading-relaxed text-text-500">
+                Click any village marker on the 2D map — or switch to <span className="font-semibold text-text-900">3D terrain</span> for
                 the satellite flyover — to open live climate, sensors, WHY explanation, arrival countdown and the evacuation card.
               </p>
             </div>

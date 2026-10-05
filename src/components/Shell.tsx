@@ -25,7 +25,7 @@ function IstClock() {
     const h = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(h);
   }, []);
-  return <span className="font-mono text-[12px] text-fog-300 tabular">{fmtClock(now)} IST</span>;
+  return <span className="font-mono text-[12px] text-text-800 tabular">{fmtClock(now)} IST</span>;
 }
 
 export default function Shell() {
@@ -40,15 +40,15 @@ export default function Shell() {
   return (
     <div className="flex min-h-full">
       {/* ---- sidebar ---- */}
-      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-white/8 bg-ink-900/80 p-4 lg:flex">
+      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-surface-300 bg-white p-4 lg:flex">
         <div className="mb-6 flex items-center gap-2.5">
           <svg viewBox="0 0 24 24" className="h-8 w-8 shrink-0">
-            <path fill="#22d3ee" d="M12 2c3.5 4.2 7 8 7 12a7 7 0 1 1-14 0c0-4 3.5-7.8 7-12z" />
-            <path fill="#0ea5e9" d="M12 2c3.5 4.2 7 8 7 12a7 7 0 0 1-7 7V2z" />
+            <path fill="#0ea5e9" d="M12 2c3.5 4.2 7 8 7 12a7 7 0 1 1-14 0c0-4 3.5-7.8 7-12z" />
+            <path fill="#38bdf8" d="M12 2c3.5 4.2 7 8 7 12a7 7 0 0 1-7 7V2z" />
           </svg>
           <div className="min-w-0">
-            <div className="font-display text-[16px] font-bold leading-tight tracking-wide text-fog-100">JAL-DARPAAN</div>
-            <div className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-aqua-300/80">Hill flash flood EWS</div>
+            <div className="font-display text-[16px] font-bold leading-tight tracking-wide text-text-900">JAL-DARPAAN</div>
+            <div className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-aqua-600">Hill flash flood EWS</div>
           </div>
         </div>
 
@@ -62,7 +62,7 @@ export default function Shell() {
                 `flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[13px] font-semibold transition ${
                   isActive
                     ? 'bg-aqua-500/15 text-aqua-300 shadow-[inset_0_0_0_1px_rgba(34,211,238,0.3)]'
-                    : 'text-fog-400 hover:bg-white/[0.05] hover:text-fog-100'
+                    : 'text-text-800 hover:bg-surface-100 hover:text-text-900'
                 }`
               }
             >
@@ -79,11 +79,11 @@ export default function Shell() {
 
         <div className={`mt-4 rounded-xl border p-3 ${roleMeta.color}`}>
           <div className="text-[10px] font-bold uppercase tracking-[0.14em] opacity-80">{roleMeta.label}</div>
-          <div className="mt-0.5 truncate text-[13px] font-bold text-fog-100">{user.name}</div>
-          <div className="truncate text-[11px] text-fog-400">{user.posting}</div>
+          <div className="mt-0.5 truncate text-[13px] font-bold text-text-900">{user.name}</div>
+          <div className="truncate text-[11px] text-text-800">{user.posting}</div>
         </div>
         <button
-          className="btn-ghost mt-2 !justify-start !py-2 !text-[12px] !text-fog-400"
+          className="btn-ghost mt-2 !justify-start !py-2 !text-[12px] !text-text-800"
           onClick={() => {
             logout();
             navigate('/login');
@@ -91,15 +91,14 @@ export default function Shell() {
         >
           <LogOut size={14} /> Sign out
         </button>
-        <div className="mt-3 text-[9.5px] leading-relaxed text-fog-500">
-          PS 26192 · Team BhushaktiAI<br />Demo build · simulated feeds
+        <div className="mt-3 text-[9.5px] leading-relaxed text-text-800">            PS 26192 · Team BhushaktiAI<br />Demo build · simulated feeds
         </div>
       </aside>
 
       {/* ---- main ---- */}
       <div className="min-w-0 flex-1">
-        <header className="sticky top-0 z-20 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-white/8 bg-ink-950/85 px-4 py-2.5 backdrop-blur-md">
-          <span className="flex items-center gap-2 font-display text-[15px] font-bold tracking-wide text-fog-100 lg:hidden">
+        <header className="sticky top-0 z-20 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-surface-300 bg-white/95 px-4 py-2.5 backdrop-blur-md">
+          <span className="flex items-center gap-2 font-display text-[15px] font-bold tracking-wide text-text-900 lg:hidden">
             JAL-DARPAAN
           </span>
           <span className="flex items-center gap-1.5 font-mono text-[10.5px] text-emerald-300">
@@ -107,8 +106,8 @@ export default function Shell() {
           </span>
           <IstClock />
           <span className="ml-auto flex items-center gap-2">
-            <span className={`chip hidden sm:inline-flex ${roleMeta.color}`}>{roleMeta.label}</span>
-            <span className="text-[12px] font-semibold text-fog-300">{user.name}</span>
+            <span className={`chip hidden sm:inline-flex ${roleMeta.color} border-text-300 bg-surface-100 text-text-800`}>{roleMeta.label}</span>
+            <span className="text-[12px] font-semibold text-text-700">{user.name}</span>
             <button
               className="btn-ghost !px-2.5 !py-1.5 !text-[11px] lg:hidden"
               onClick={() => {
@@ -122,24 +121,22 @@ export default function Shell() {
         </header>
 
         {/* mobile nav */}
-        <nav className="flex gap-1.5 overflow-x-auto border-b border-white/8 bg-ink-900/60 px-3 py-2 lg:hidden">
+        <nav className="flex gap-1.5 overflow-x-auto border-b border-surface-300 bg-white px-3 py-2 lg:hidden">
           {NAV.filter((n) => can(n.cap)).map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.end}
-              className={({ isActive }) =>
-                `flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] font-semibold ${
-                  isActive ? 'bg-aqua-500/15 text-aqua-300' : 'text-fog-400 hover:text-fog-100'
-                }`
-              }
+              className={({ isActive }) =>                `flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] font-semibold ${
+                  isActive ? 'bg-aqua-50 text-aqua-700 text-aqua-700' : 'text-text-800 hover:bg-surface-100 hover:text-text-900'
+                }`}
             >
               <n.icon size={13} /> {n.label}
             </NavLink>
           ))}
         </nav>
 
-        <main className="mx-auto w-full max-w-[1500px] p-3 md:p-4">
+        <main className="mx-auto w-full max-w-[1500px] p-4 md:p-6">
           <Outlet />
         </main>
       </div>

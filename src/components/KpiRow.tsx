@@ -59,14 +59,14 @@ export default function KpiRow({ villages, live, activeAlerts, criticalAlerts }:
     <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
       {cards.map((c) => (
         <div key={c.label} className="panel flex items-center gap-3 p-4">
-          <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl border ${c.ring}`}>
+          <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl border ${c.ring} border-text-300 bg-white`}>
             <c.icon size={20} className={c.accent} />
           </div>
           <div className="min-w-0">
             <div className="metric-label">{c.label}</div>
             <div className={`metric-num truncate text-[22px] leading-tight ${c.accent}`}>{c.value}</div>
-            <div className="mt-0.5 flex items-center gap-1 text-[11px] leading-tight text-fog-400">
-              <AlertTriangle size={10} className="shrink-0 opacity-60" />
+            <div className="mt-0.5 flex items-center gap-1 text-[11px] leading-tight text-text-800">
+              <AlertTriangle size={10} className="shrink-0 opacity-60 text-text-800" />
               <span className="truncate">{c.sub}</span>
             </div>
           </div>

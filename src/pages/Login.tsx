@@ -72,7 +72,7 @@ export default function Login() {
           </svg>
           <div>
             <div className="font-display text-[24px] font-bold leading-none tracking-wide">JAL-DARPAAN</div>
-            <div className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.22em] text-aqua-300/90">
+            <div className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.22em] text-aqua-500">
               AI Guardian Against Hill Flash Floods
             </div>
           </div>
@@ -89,13 +89,13 @@ export default function Login() {
                 <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-aqua-400/25 bg-aqua-500/10">
                   <f.icon size={15} className="text-aqua-300" />
                 </span>
-                <p className="text-[13px] leading-relaxed text-fog-300">{f.text}</p>
+                <p className="text-[13px] leading-relaxed text-text-800">{f.text}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex items-center gap-4 text-[11px] text-fog-500">
+        <div className="flex items-center gap-4 text-[11px] text-text-800">
           <span className="flex items-center gap-1.5"><MountainSnow size={13} className="text-aqua-400" /> Pilot: Rudraprayag, Uttarakhand (Mandakini valley)</span>
           <span className="flex items-center gap-1.5"><CloudRainWind size={13} className="text-aqua-400" /> SIH 2026 · PS 26192 · MHA/NDRF</span>
         </div>
@@ -111,7 +111,7 @@ export default function Login() {
             </svg>
             <div>
               <div className="font-display text-[20px] font-bold leading-none tracking-wide">JAL-DARPAAN</div>
-              <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-aqua-300/90">
+              <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-aqua-500">
                 Hill flash flood early warning
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function Login() {
 
           <div className="panel p-6 sm:p-7">
             <h2 className="font-display text-[20px] font-bold">Operations sign-in</h2>
-            <p className="mt-1 text-[12.5px] text-fog-400">
+            <p className="mt-1 text-[12.5px] text-text-800">
               Role-based access — National → State → District → Field → Village, mirroring the production JWT + RBAC design.
             </p>
 
@@ -150,7 +150,7 @@ export default function Login() {
               </div>
 
               {error && (
-                <div key={shakeKey} className="animate-shake flex items-start gap-2 rounded-xl border border-red-400/40 bg-red-500/10 px-3.5 py-3 text-[12.5px] text-red-300">
+                <div key={shakeKey} className="animate-shake flex items-start gap-2 rounded-xl border border-red-400/50 bg-red-50 px-3.5 py-3 text-[12.5px] text-red-700">
                   <Lock size={14} className="mt-0.5 shrink-0" />
                   {error}
                 </div>
@@ -161,8 +161,8 @@ export default function Login() {
               </button>
             </form>
 
-            <div className="my-5 flex items-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-fog-500">
-              <span className="h-px flex-1 bg-white/10" /> one-click demo logins <span className="h-px flex-1 bg-white/10" />
+            <div className="my-5 flex items-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-text-800">
+              <span className="h-px flex-1 bg-surface-300" /> one-click demo logins <span className="h-px flex-1 bg-surface-300" />
             </div>
 
             <div className="space-y-2">
@@ -177,23 +177,23 @@ export default function Login() {
                       setPassword(u.password);
                       setError(null);
                     }}
-                    className={`flex w-full items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left transition hover:bg-white/[0.06] ${meta.color}`}
+                    className={`flex w-full items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left transition hover:bg-surface-100 ${meta.color} border-text-300 bg-surface-100 text-text-800`}
                   >
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[12.5px] font-bold text-fog-100">{meta.label}</span>
-                      <span className="block truncate font-mono text-[11px] text-fog-400">{u.email}</span>
+                      <span className="block text-[12.5px] font-bold text-text-900">{meta.label}</span>
+                      <span className="block truncate font-mono text-[11px] text-text-800">{u.email}</span>
                     </span>
                     <ArrowRight size={14} className="shrink-0 opacity-70" />
                   </button>
                 );
               })}
             </div>
-            <p className="mt-3 text-center text-[11px] text-fog-500">
-              All demo accounts use password <span className="font-mono text-fog-300">Demo@1234</span> — chips auto-fill both fields.
+            <p className="mt-3 text-center text-[11px] text-text-800">
+              All demo accounts use password <span className="font-mono text-text-800">Demo@1234</span> — chips auto-fill both fields.
             </p>
           </div>
 
-          <p className="mt-4 text-center text-[11px] leading-relaxed text-fog-500">
+          <p className="mt-4 text-center text-[11px] leading-relaxed text-text-800">
             “Government already spent crores on these stations — JAL-DARPAAN makes them save lives.”
           </p>
         </div>

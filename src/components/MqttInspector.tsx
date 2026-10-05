@@ -21,28 +21,28 @@ export default function MqttInspector() {
 
   return (
     <div className="panel overflow-hidden">
-      <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+      <div className="flex items-center justify-between border-b border-surface-300 px-4 py-3">
         <div className="flex items-center gap-2">
-          <TerminalSquare size={15} className="text-emerald-300" />
+          <TerminalSquare size={15} className="text-emerald-600" />
           <h3 className="panel-title">MQTT telemetry · live inspector</h3>
         </div>
-        <span className="flex items-center gap-1.5 font-mono text-[10.5px] text-emerald-300">
+        <span className="flex items-center gap-1.5 font-mono text-[10.5px] text-emerald-600">
           <Radio size={11} className="live-dot" /> mosquitto :1883
         </span>
       </div>
       <div className="p-4">
         <div className="mb-2 flex flex-wrap items-center gap-2 font-mono text-[11px]">
-          <span className="chip border-emerald-400/30 bg-emerald-500/10 text-emerald-300">
+          <span className="chip border-emerald-400/50 bg-emerald-50 text-emerald-700">
             topic: jaldarpaan/telemetry/{packet.village_code}
           </span>
-          <span className="text-fog-500">QoS 1 · retained=false · packet #{1000 + tick}</span>
+          <span className="text-text-800">QoS 1 · retained=false · packet #{1000 + tick}</span>
         </div>
-        <pre className="overflow-x-auto rounded-xl border border-emerald-400/15 bg-[#04120c] p-3.5 font-mono text-[12px] leading-relaxed text-emerald-200">
+        <pre className="overflow-x-auto rounded-xl border border-emerald-400/30 bg-emerald-50 p-3.5 font-mono text-[12px] leading-relaxed text-emerald-800">
 {JSON.stringify(packet, null, 2)}
         </pre>
-        <p className="mt-2 text-[11px] leading-relaxed text-fog-400">
-          This is the <span className="font-semibold text-fog-200">exact production ESP32 payload</span> defined in the proposal —
-          the simulator and real ₹1,500 nodes emit identical JSON, so hardware plugs in with <span className="text-aqua-300">zero code change</span>.
+        <p className="mt-2 text-[11px] leading-relaxed text-text-800">
+          This is the <span className="font-semibold text-text-700">exact production ESP32 payload</span> defined in the proposal —
+          the simulator and real ₹1,500 nodes emit identical JSON, so hardware plugs in with <span className="text-aqua-600">zero code change</span>.
         </p>
       </div>
     </div>

@@ -19,7 +19,7 @@ export default function Sparkline({ values, color = '#22d3ee', width = 96, heigh
     .join(' ');
   return (
     <svg width={width} height={height} className="overflow-visible">
-      <polyline points={pts} fill="none" stroke={color} strokeWidth={1.6} strokeLinejoin="round" strokeLinecap="round" opacity={0.95} />
+      <polyline points={pts} fill="none" stroke={color} strokeWidth={1.8} strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   );
 }
